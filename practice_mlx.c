@@ -17,7 +17,7 @@ int deal_key()
 
 int main(int argc, char **argv)
 {
-    char    *maps;
+    line_data    *maps;
     window_data window;
     t_data  image;
 

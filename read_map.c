@@ -4,32 +4,36 @@
 #include <stdio.h>
 #include "libft/libft.h"
 
-int	*get_map_data(char *maps, l_data **line_data)
+int	*get_map_data(char *line, line_data **maps, int y)
 {
 	char	*start;
 	int	x;
-	int	y;
+	int	z;
 
-	y = 0;
-	start = maps;
-	while (maps)
+	start = line;
+	while (line)
 	{
-		while (*maps == '\n')
+		x = 0;
+		while (*line >= '0' && *line <= '9' || *line)
+			line++;
+		(**maps).z = ft_atoi(start);
+		(**maps).x = x++;
+		(**maps).y = y;
+		if (*line == ' ')
+			line++;
+		if (*line == ',')
 		{
-			x = 0;
-			while (maps >= '0' && maps <= '9')
-				maps++;
-			(**line_data).z = ft_atoi(start);
-			(**line_data).x = x++;
-			(**line_data).y = y;
-
+			start = ++line;
+			while (*line >= '0' && *line <= '9' || *line)
+				line++;
+			(**maps).color = 
 		}
 	}
 }
 
-void	read_map(int argc, char *argv, char **maps)
+// get_next_line을 이용해서 파일 읽고, maps라는 아주 큰 일차원배열에 다
+void	read_map(int argc, char *argv, line_data **maps)
 {
-	l_data *line_data;
 	char	*line;
 	int		offset;
 	int		fd;

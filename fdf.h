@@ -13,14 +13,14 @@ typedef struct	s_data
 	int		endian;
 }	t_data;
 
-typedef struct	l_data
+typedef struct	line_data
 {
 	int	x;
 	int	y;
 	int	z;
 	int	color;
-	l_data	next;
-}	l_data;
+	struct l_data	*next;
+}	line_data;
 
 typedef struct window_data
 {
