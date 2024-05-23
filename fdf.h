@@ -30,3 +30,4 @@ typedef struct window_data
 
 
 void	read_map(int argc, char *argv, char **maps);
+void	print_error();

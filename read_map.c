@@ -24,6 +24,8 @@ int	*get_map_data(char *line, line_data **maps, int y)
 		if (*line == ',')
 		{
 			start = ++line;
+			if (!(*line >= '0' && *line <= '9'))
+				print_error();
 			while (*line >= '0' && *line <= '9' || *line)
 				line++;
 			(**maps).color = 
