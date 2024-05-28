@@ -17,11 +17,12 @@ int deal_key()
 
 int main(int argc, char **argv)
 {
-    line_data    *maps;
+    char    *maps;
+    line_data   *map;
     window_data window;
     t_data  image;
 
-    read_map(argc, argv[1], &maps);
+    read_map(argc, argv[1], &maps, &map);
     
     window.mlx_ptr = mlx_init();
     window.win_ptr = mlx_new_window(window.mlx_ptr, 500, 500, "My Window");

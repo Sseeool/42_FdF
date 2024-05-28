@@ -1,3 +1,9 @@
+#ifndef FDF_H
+# define FDF_H
+
+# ifndef COLOR_DEFAULT
+#  define COLOR_DEFAULT 0xFFFFFF
+# endif
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,7 +25,7 @@ typedef struct	line_data
 	int	y;
 	int	z;
 	int	color;
-	struct l_data	*next;
+	int	end;
 }	line_data;
 
 typedef struct window_data
@@ -29,5 +35,7 @@ typedef struct window_data
 }	window_data;
 
 
-void	read_map(int argc, char *argv, char **maps);
+void	read_map(int argc, char *argv, char **maps, line_data **map);
 void	print_error();
+
+#endif
