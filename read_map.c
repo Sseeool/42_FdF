@@ -52,7 +52,8 @@ void	get_map_data(char *line, line_data **new_line, int y)
 	x = 0;
 	while (line)
 	{
-		while ((*line >= '0' && *line <= '9') || *line)
+		start = line;
+		while ((*line >= '0' && *line <= '9') || *line == '-' || *line)
 			line++;
 		(**new_line).z = ft_atoi(start);
 		(**new_line).x = x++;
@@ -68,6 +69,7 @@ void	get_map_data(char *line, line_data **new_line, int y)
 			(**new_line).color = COLOR_DEFAULT;
 		while (*line == ' ' || *line)
 			line++;
+		printf("%d %d %d %d\n", (**new_line).z, (**new_line).x, (**new_line).y, (**new_line).color);
 		new_line++;
 	}
 	(**new_line).end = 1;
@@ -116,25 +118,17 @@ void	read_map(int argc, char *argv, char **maps, line_data **map)
 	y = 0;
 	*maps = ft_strdup("");
     fd = open(argv, O_RDONLY);
-	line = get_next_line(fd);
-	line_len = ft_strlen(line);
-	new_line = (line_data *)malloc(sizeof(line_data) * (line_len));
-	get_map_data(line, &new_line, y);
-	*maps = ft_strjoin(*maps, line);
-	*map = join_struct(*map, new_line);
-    free(line);
-	free(new_line);
-	for (int i = 0; map[i]->end != 1; i++)
+	/*for (int i = 0; map[i]->end != 1; i++)
 	{
 		printf("\n\n");
 		printf("x = %d y = %d z = %d color = %d\n", new_line->x, new_line->y, new_line->z, new_line->color);
 		printf("\n---------\n");
-	}
-    /*while (1)
+	}*/
+    while (1)
     {
         line = get_next_line(fd);
 		line_len = ft_strlen(line);
-		new_line = (line_data *)malloc(sizeof(line_data) * (line_len));
+		new_line = (line_data *)malloc(sizeof(line_data) * (line_len + 1));
 		get_map_data(line, &new_line, y);
 
 		for (int i = 0; new_line[i].end != 1; i++)
@@ -150,7 +144,7 @@ void	read_map(int argc, char *argv, char **maps, line_data **map)
 		*map = join_struct(*map, new_line);
         free(line);
 		free(new_line);
-    }*/
+    }
     close(fd);
     printf("%s\n", *maps);
 	printf("y = %d\n", y);
