@@ -78,7 +78,7 @@ int	get_color(char *s)
 	return (result);
 }
 
-void	get_map_data(char *line, line_data **new_line, int y)
+void	get_map_data(char *line, line_data *new_line, int y)
 {
 	char	*start;
 	int	x;
@@ -89,23 +89,23 @@ void	get_map_data(char *line, line_data **new_line, int y)
 		start = line;
 		while ((*line >= '0' && *line <= '9') && *line)
 			line++;
-		(*new_line)->z = ft_atoi(start);
-		(*new_line)->x = x++;
-		(*new_line)->y = y;
+		(new_line)->z = ft_atoi(start);
+		(new_line)->x = x++;
+		(new_line)->y = y;
 		if (*line == ',')
 		{
 			start = ++line;
 			while ((*line >= '0' && *line <= '9') && *line)
 				line++;
-			(**new_line).color = get_color(start);
+			(new_line)->color = get_color(start);
 		}
 		else
-			(**new_line).color = COLOR_DEFAULT;
+			(new_line)->color = COLOR_DEFAULT;
 		while (*line == ' ' && *line)
 			line++;
-		(*new_line)++;
+		(new_line)++;
 	}
-	(**new_line).color = -1;
+	(new_line)->color = -1;
 }
 
 
@@ -115,42 +115,38 @@ void join_struct(line_data **struct1, line_data **struct2) {
     line_data *new_struct;
 
 	i = 0;
-    // 두 배열의 길이를 구함
     len1 = count_struct(*struct1);
     len2 = count_struct(*struct2);
     new_len = len1 + len2;
 
-    // 새로 합쳐질 배열을 위한 메모리 할당
     new_struct = (line_data *)malloc(sizeof(line_data) * (new_len + 1));
-    if (new_struct == NULL) {
+    if (new_struct == NULL)
+	{
         perror("Failed to allocate memory");
         exit(1);
     }
 
-    // 첫 번째 배열의 내용을 새 배열로 복사
-    for (i = 0; i < len1; i++) {
+    for (i = 0; i < len1; i++)
+	{
         new_struct[i].x = (*struct1[i]).x;
 		new_struct[i].y = (*struct1[i]).y;
 		new_struct[i].z = (*struct1[i]).z;
 		new_struct[i].color = (*struct1[i]).color;
     }
 
-    // 두 번째 배열의 내용을 새 배열로 복사
-    for (j = 0; j < len2; j++, i++) {
+    for (j = 0; j < len2; j++, i++)
+	{
         new_struct[i].x = (*struct2[i]).x;
 		new_struct[i].y = (*struct2[i]).y;
 		new_struct[i].z = (*struct2[i]).z;
 		new_struct[i].color = (*struct2[i]).color;
     }
 
-    // 새 배열의 끝에 null 문자 추가
     new_struct[new_len].color = -1;
 
-    // 원래 struct1 메모리 해제 및 struct1이 새 배열을 가리키도록 설정
     free(*struct1);
     *struct1 = new_struct;
 
-    // struct2 메모리 해제
     free(*struct2);
     *struct2 = NULL;
 }
@@ -168,28 +164,18 @@ int main()
 
 	i = 0;
 	j = 0;
-	struct1 = (line_data *)malloc(sizeof(line_data) * (strlen(s1) + 1));
-	struct2 = (line_data *)malloc(sizeof(line_data) * (strlen(s2) + 1));
+	struct1 = (line_data *)malloc(sizeof(line_data) * ((strlen(s1) / 2) + 1));
+	struct2 = (line_data *)malloc(sizeof(line_data) * ((strlen(s2) / 2)+ 1));
 
 	printf("get_map_data start!");
-	get_map_data(s1, &struct1, 0);
-	get_map_data(s2, &struct2, 0);
+	get_map_data(s1, struct1, 0);
+	get_map_data(s2, struct2, 0);
 	printf("get_map_data end!");
 
-	//checking struct1 & struct2
+	join_struct(&struct1, &struct2);
 	for (int i = 0; struct1[i].color != -1; i++)
 	{
 		printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
 	}
-	for (int i = 0; struct2[i].color != -1; i++)
-	{
-		printf("x: %d y: %d z: %d color: %d\n", struct2[i].x, struct2[i].y, struct2[i].z, struct2[i].color);
-	}
-
-	/*join_struct(&struct1, &struct2);
-	for (int i = 0; struct1[i].color != -1; i++)
-	{
-		printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
-	}*/
 	return 0;
 }
