@@ -5,6 +5,14 @@
 #  define COLOR_DEFAULT 0xFFFFFF
 # endif
 
+# ifndef SCALE
+#  define SCALE	5
+# endif
+
+# ifndef ANGLE
+#  define ANGLE	30
+# endif
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
@@ -37,11 +45,11 @@ typedef struct window_data
 
 typedef struct	map
 {
-	line_data	pos;
+	line_data	*pos;
 } map;
 
 
-void	read_map(char *argv);
+line_data *read_map(char *argv, int *size);
 void	print_error();
 void	allocate_newstruct_error(line_data *new_struct);
 void	open_file_error(int fd);
@@ -54,5 +62,9 @@ void	get_map_data(char *line, line_data *struct1, int y);
 void	join_struct(line_data **struct1, line_data **struct2);
 void	invalid_color_error(char c);
 int		get_map_size(line_data *struct1, int y);
+int		get_map_size(line_data *struct1, int y);
+void	isometric(line_data *struct1, int size);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	draw(line_data *struct1, int size, t_data *image);
 
 #endif

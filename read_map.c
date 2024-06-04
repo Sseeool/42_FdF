@@ -51,9 +51,10 @@ void	get_map_data(char *line, line_data *struct1, int y)
 		printf("y = %d line = %c\n", y, *line);
 		while (((*line >= '0' && *line <= '9') || *line == '-') && *line)
 			line++;
-		struct1->z = ft_atoi(start);
-		struct1->x = x++;
-		struct1->y = y;
+		struct1->z = ft_atoi(start) * SCALE;
+		struct1->x = x * SCALE;
+		x++;
+		struct1->y = y * SCALE;
 		struct1->color = get_color(&line);
 		while (*line == ' ' && *line)
 			line++;
@@ -90,7 +91,7 @@ void join_struct(line_data **struct1, line_data **struct2)
     *struct2 = NULL;
 }
 
-void read_map(char *argv)
+line_data *read_map(char *argv, int *size)
 {
 	char *line;
 	line_data *struct1;
@@ -120,7 +121,7 @@ void read_map(char *argv)
     for (int i = 0; struct1[i].color != -1; i++) {
         printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
     }
-	get_map_size(struct1, y);
-	free(struct1);
+	*size = get_map_size(struct1, y);
 	close(fd);
+	return (struct1);
 }
