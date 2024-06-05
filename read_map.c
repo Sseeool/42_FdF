@@ -1,8 +1,4 @@
-#include "minilibx-linux/mlx.h"
 #include "fdf.h"
-#include "get_next_line/get_next_line.h"
-#include <stdio.h>
-#include "libft/libft.h"
 
 int	count_struct(line_data *struct1)
 {
@@ -91,21 +87,19 @@ void join_struct(line_data **struct1, line_data **struct2)
     *struct2 = NULL;
 }
 
-line_data *read_map(char *argv, int *size)
+line_data *read_map(char *argv, int *y)
 {
 	char *line;
 	line_data *struct1;
 	line_data *struct2;
 	int fd;
-	int y;
 
-	y = 0;
 	fd = open(argv, O_RDONLY);
 	open_file_error(fd);
 	line = get_next_line(fd);
 	struct1 = (line_data *)malloc(sizeof(line_data) * ((ft_strlen(line) / 2) + 1));
 	allocate_struct1_error(struct1, &line, fd);
-	get_map_data(line, struct1, y++);
+	get_map_data(line, struct1, (*y)++);
 	free(line);
 	while (1)
 	{
@@ -114,14 +108,13 @@ line_data *read_map(char *argv, int *size)
 			break;
 		struct2 = (line_data *)malloc(sizeof(line_data) * ((ft_strlen(line) / 2) + 1));
 		allocate_struct2_error(struct2, &struct1, &line, fd);
-		get_map_data(line, struct2, y++);
+		get_map_data(line, struct2, (*y)++);
 		join_struct(&struct1, &struct2);
 		free(line);
 	}
     for (int i = 0; struct1[i].color != -1; i++) {
         printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
     }
-	*size = get_map_size(struct1, y);
 	close(fd);
 	return (struct1);
 }

@@ -1,9 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iget_next_line -Ilibft -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -Iget_next_line -Ilibft -g -fsanitize=address
 AR = ar
 ARFLAGS = -rcs
 RM = rm -f
-LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11
+LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 SRC = $(wildcard *.c) $(wildcard get_next_line/*.c) $(wildcard libft/*.c)
 OBJ = $(SRC:.c=.o)

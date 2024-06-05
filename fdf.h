@@ -6,7 +6,7 @@
 # endif
 
 # ifndef SCALE
-#  define SCALE	5
+#  define SCALE	30
 # endif
 
 # ifndef ANGLE
@@ -19,6 +19,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+#include "get_next_line/get_next_line.h"
+#include "libft/libft.h"
+#include "minilibx-linux/mlx.h"
 
 typedef struct	s_data
 {
@@ -49,7 +52,7 @@ typedef struct	map
 } map;
 
 
-line_data *read_map(char *argv, int *size);
+line_data *read_map(char *argv, int *y);
 void	print_error();
 void	allocate_newstruct_error(line_data *new_struct);
 void	open_file_error(int fd);
@@ -61,10 +64,10 @@ int		get_color(char **s);
 void	get_map_data(char *line, line_data *struct1, int y);
 void	join_struct(line_data **struct1, line_data **struct2);
 void	invalid_color_error(char c);
-int		get_map_size(line_data *struct1, int y);
-int		get_map_size(line_data *struct1, int y);
+int		get_x_size(line_data *struct1);
 void	isometric(line_data *struct1, int size);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw(line_data *struct1, int size, t_data *image);
+void	draw_line(line_data *struct1, int x_max, int y_max, t_data *image);
 
 #endif
