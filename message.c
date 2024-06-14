@@ -1,8 +1,17 @@
-#include "minilibx-linux/mlx.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   message.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/07 04:23:48 by eonoh             #+#    #+#             */
+/*   Updated: 2024/06/07 04:23:53 by eonoh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
-#include "get_next_line/get_next_line.h"
-#include <stdio.h>
-#include "libft/libft.h"
+
 
 void	allocate_newstruct_error(line_data *new_struct)
 {

@@ -1,12 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
+/*   Updated: 2024/06/14 04:10:16 by eonoh            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-int	count_struct(line_data *struct1)
+int	get_map_size(char *argv)
 {
-	int cnt;
+	int	fd;
+	int	x;
+	int	y;
+	char	*line;
+
+	y = 0;
+	fd = open(argv, O_RDONLY);
+	line = get_next_line(fd);
+	y++;
+	x = count_word(line, ' ');
+	free(line);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+		y++;
+		free(line);
+	}
+	return (x * y);
+}
+
+int	count_word(char *s, char c)
+{
+	int	cnt;
+	int flag;
 
 	cnt = 0;
-	while (struct1[cnt].color != -1)
-		cnt++;
+	flag = 1;
+	while (*s != '\n' && *s)
+	{
+		if (flag == 1 && *s != c)
+		{
+			cnt++;
+			flag = 0;
+		}
+		if (*s == c)
+			flag = 1;
+		s++;
+	}
 	return (cnt);
 }
 
@@ -35,86 +82,58 @@ int	get_color(char **s)
 	return (result);
 }
 
-void	get_map_data(char *line, line_data *struct1, int y)
+map_range	get_map_data(char *line, line_data *struct1, int y, int *i)
 {
 	char	*start;
 	int		x;
+	map_range	pos_range;
 
 	x = 0;
 	while (*line != '\n' && *line != '\0')
 	{
 		start = line;
-		printf("y = %d line = %c\n", y, *line);
+		while (!((*line >= '0' && *line <= '9') || *line == '-'))
+			line++;
 		while (((*line >= '0' && *line <= '9') || *line == '-') && *line)
 			line++;
-		struct1->z = ft_atoi(start) * SCALE;
-		struct1->x = x * SCALE;
+		struct1[*i].z = ft_atoi(start);
+		struct1[*i].x = x;
 		x++;
-		struct1->y = y * SCALE;
-		struct1->color = get_color(&line);
+		struct1[*i].y = y;
+		struct1[*i].color = get_color(&line);
 		while (*line == ' ' && *line)
 			line++;
-		struct1++;
+		set_coordinate_bounds(&pos_range, *i, struct1[*i]);
+		// printf("struct[%d].z = %d x = %d y = %d color = %d\n", *i, struct1[*i].z, struct1[*i].x, struct1[*i].y, struct1[*i].color);
+		(*i)++;
 	}
-	struct1->color = -1;
+	struct1[*i].color = -1;
+	return (pos_range);
 }
 
-void join_struct(line_data **struct1, line_data **struct2)
-{
-    int len1;
-    int len2;
-    int i;
-    int j;
-    line_data *new_struct;
-
-	i = 0;
-    j = 0;
-    len1 = count_struct(*struct1);
-    len2 = count_struct(*struct2);
-    new_struct = (line_data *)malloc(sizeof(line_data) * (len1 + len2 + 1));
-    allocate_newstruct_error(new_struct);
-    while (i < len1)
-    {
-        new_struct[i] = (*struct1)[i];
-        ++i;
-    }
-    while (j < len2)
-        new_struct[i++] = (*struct2)[j++];
-    new_struct[i].color = -1;
-    free(*struct1);
-    *struct1 = new_struct;
-    free(*struct2);
-    *struct2 = NULL;
-}
-
-line_data *read_map(char *argv, int *y)
+line_data *read_map(char *argv, int *y, int size, map_range	*pos_range)
 {
 	char *line;
 	line_data *struct1;
-	line_data *struct2;
 	int fd;
+	int	i;
 
 	fd = open(argv, O_RDONLY);
 	open_file_error(fd);
-	line = get_next_line(fd);
-	struct1 = (line_data *)malloc(sizeof(line_data) * ((ft_strlen(line) / 2) + 1));
+	struct1 = (line_data *)malloc(sizeof(line_data) * ((size) + 1));
 	allocate_struct1_error(struct1, &line, fd);
-	get_map_data(line, struct1, (*y)++);
-	free(line);
+	i = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		struct2 = (line_data *)malloc(sizeof(line_data) * ((ft_strlen(line) / 2) + 1));
-		allocate_struct2_error(struct2, &struct1, &line, fd);
-		get_map_data(line, struct2, (*y)++);
-		join_struct(&struct1, &struct2);
+		*pos_range = get_map_data(line, struct1, (*y)++, &i);
 		free(line);
 	}
-    for (int i = 0; struct1[i].color != -1; i++) {
-        printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
-    }
+	//for (int i = 0; i < size; i++) {
+	//	printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
+	//}
 	close(fd);
 	return (struct1);
 }
