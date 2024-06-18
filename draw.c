@@ -6,24 +6,24 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:19:37 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/13 20:09:30 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/18 16:06:08 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "fdf.h"
 
-int	get_x_size(line_data *struct1)
-{
-	int	x;
+//int	get_x_size(line_data *struct1)
+//{
+//	int	x;
 
-	x = 0;
-	while (struct1[x].y < 1)
-		x++;
-	return (x);
-}
+//	x = 0;
+//	while (struct1[x].y < 1)
+//		x++;
+//	return (x);
+//}
 
-void	isometric(line_data *struct1, int size)
+void	isometric(line_data *map_pos, int size, map_range *isometric_range)
 {
 	int	i;
 	double	pi;
@@ -32,11 +32,12 @@ void	isometric(line_data *struct1, int size)
 	pi = 3.14;
 	while (i < size)
 	{
-		struct1[i].x = struct1[i].x * cos(ANGLE * pi / 180) - struct1[i].y * cos(ANGLE * pi / 180);
-		struct1[i].y = struct1[i].x * sin(ANGLE * pi / 180) - struct1[i].z;
-		struct1[i].x += 100;
-		struct1[i].y += 100;
-		printf("x: %d y: %d\n", struct1[i].x, struct1[i].y);
+		map_pos[i].x = map_pos[i].x * cos(ANGLE * pi / 180) - map_pos[i].y * cos(ANGLE * pi / 180);
+		map_pos[i].y = map_pos[i].x * sin(ANGLE * pi / 180) - map_pos[i].z;
+		map_pos[i].x += 100;
+		map_pos[i].y += 100;
+		printf("x: %d y: %d\n", map_pos[i].x, map_pos[i].y);
+		set_coordinate_bounds(isometric_range, i, map_pos[i]);
 		i++;
 	}
 }
