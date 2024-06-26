@@ -3,37 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/18 16:06:10 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/26 02:08:23 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	get_map_size(char *argv)
+int	get_map_size(char *argv, t_map *fdf)
 {
 	int	fd;
-	int	x;
-	int	y;
 	char	*line;
 
-	y = 0;
+	fdf->y_size = 0;
 	fd = open(argv, O_RDONLY);
 	line = get_next_line(fd);
-	y++;
-	x = count_word(line, ' ');
+	(fdf->y_size)++;
+	fdf->x_size = count_word(line, ' ');
 	free(line);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		y++;
+		(fdf->y_size)++;
 		free(line);
 	}
-	return (x * y);
+	return ((fdf->x_size) * (fdf->y_size));
 }
 
 int	count_word(char *s, char c)
@@ -82,11 +80,11 @@ int	get_color(char **s)
 	return (result);
 }
 
-map_range	get_map_data(char *line, line_data *struct1, int y, int *i)
+// 이상한 맵 들어오면 exit 때리기. 직사각형, 숫자만 들어와야하고.
+void	get_map_data(char *line, int y, t_map *fdf, int *i)
 {
 	char	*start;
 	int		x;
-	map_range	pos_range;
 
 	x = 0;
 	while (*line != '\n' && *line != '\0')
@@ -96,44 +94,39 @@ map_range	get_map_data(char *line, line_data *struct1, int y, int *i)
 			line++;
 		while (((*line >= '0' && *line <= '9') || *line == '-') && *line)
 			line++;
-		struct1[*i].z = ft_atoi(start);
-		struct1[*i].x = x;
+		fdf->map[*i].z = ft_atoi(start);
+		fdf->map[*i].x = x;
 		x++;
-		struct1[*i].y = y;
-		struct1[*i].color = get_color(&line);
+		fdf->map[*i].y = y;
+		fdf->map[*i].color = get_color(&line);
 		while (*line == ' ' && *line)
 			line++;
-		set_coordinate_bounds(&pos_range, *i, struct1[*i]);
-		// printf("struct[%d].z = %d x = %d y = %d color = %d\n", *i, struct1[*i].z, struct1[*i].x, struct1[*i].y, struct1[*i].color);
+		set_coordinate_bounds(fdf, fdf->map, *i);
+		isometric(fdf, *i);
 		(*i)++;
 	}
-	struct1[*i].color = -1;
-	return (pos_range);
 }
 
-line_data *read_map(char *argv, int *y, int size, map_range	*pos_range)
+void read_map(char *argv, t_map *fdf)
 {
 	char *line;
-	line_data *struct1;
 	int fd;
 	int	i;
+	int	y;
 
 	fd = open(argv, O_RDONLY);
 	open_file_error(fd);
-	struct1 = (line_data *)malloc(sizeof(line_data) * ((size) + 1));
-	allocate_struct1_error(struct1, &line, fd);
 	i = 0;
+	y = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		*pos_range = get_map_data(line, struct1, (*y)++, &i);
+		get_map_data(line, y++, fdf, &i);
 		free(line);
 	}
-	//for (int i = 0; i < size; i++) {
-	//	printf("x: %d y: %d z: %d color: %d\n", struct1[i].x, struct1[i].y, struct1[i].z, struct1[i].color);
-	//}
+	fdf->map[i].color = -1;
+	fdf->i_map[i].color = -1;
 	close(fd);
-	return (struct1);
 }

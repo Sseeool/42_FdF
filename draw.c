@@ -6,52 +6,41 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:19:37 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/18 16:06:08 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/26 23:03:31 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "fdf.h"
 
-//int	get_x_size(line_data *struct1)
-//{
-//	int	x;
-
-//	x = 0;
-//	while (struct1[x].y < 1)
-//		x++;
-//	return (x);
-//}
-
-void	isometric(line_data *map_pos, int size, map_range *isometric_range)
+void	isometric(t_map *fdf, int i)
 {
-	int	i;
 	double	pi;
+	double	x;
+	double	y;
+	int		z;
 
-	i = 0;
-	pi = 3.14;
-	while (i < size)
-	{
-		map_pos[i].x = map_pos[i].x * cos(ANGLE * pi / 180) - map_pos[i].y * cos(ANGLE * pi / 180);
-		map_pos[i].y = map_pos[i].x * sin(ANGLE * pi / 180) - map_pos[i].z;
-		map_pos[i].x += 100;
-		map_pos[i].y += 100;
-		printf("x: %d y: %d\n", map_pos[i].x, map_pos[i].y);
-		set_coordinate_bounds(isometric_range, i, map_pos[i]);
-		i++;
-	}
+	pi = 3.1415926;
+	fdf->i_map[i] = fdf->map[i];
+	x = fdf->i_map[i].x;
+	y = fdf->i_map[i].y;
+	z = fdf->i_map[i].z;
+	fdf->i_map[i].x = (x - y) * cos(fdf->x_angle * pi / 180);
+	fdf->i_map[i].y = (x + y) * sin(fdf->y_angle * pi / 180) - z * 0.5;
+	set_coordinate_bounds(fdf, fdf->i_map, i);
 }
 
-void	draw(line_data *struct1, int size, t_data *image)
+void	draw(t_pos *map, int size, t_data *image)
 {
 	int	i;
+	int	x;
+	int	y;
 
 	i = 0;
 	while (i < size)
 	{
-		//printf("\n\n###draw %d %d %d", struct1[i].x + 500, struct1[i].y + 500, struct1[i].color);
-		my_mlx_pixel_put(image, struct1[i].x, struct1[i].y, struct1[i].color);
-		//mlx_pixel_put (window->mlx_ptr, window->win_ptr, struct1[i].x, struct1[i].y, struct1[i].color);
+		x = (int)map[i].x;
+		y = (int)map[i].y;
+		my_mlx_pixel_put(image, x, y, map[i].color);
 		i++;
 	}
 }
@@ -63,24 +52,3 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-
-//void	draw_line(line_data *struct1, t_data *image)
-//{
-//	int	i;
-
-//	//while (i < x_max * y_max)
-//	//{
-//	//	//printf("\n\n###draw %d %d %d", struct1[i].x + 500, struct1[i].y + 500, struct1[i].color);
-//	//	my_mlx_pixel_put(image, struct1[i].x, struct1[i].y, struct1[i].color);
-//	//	//mlx_pixel_put (window->mlx_ptr, window->win_ptr, struct1[i].x, struct1[i].y, struct1[i].color);
-//	//	i++;
-//	i = struct1[0].x;
-
-//	while (struct1[i].y < struct1[i].y + 1)
-//	{
-//		my_mlx_pixel_put(image, struct1[i].x, struct1[i].y, struct1[i].color);
-//		i++;
-//		if (struct1[i].color == -1)
-//			break;
-//	}
-//}
