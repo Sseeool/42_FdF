@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 20:28:22 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/25 23:38:52 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/28 17:02:17 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,40 +36,32 @@ int	get_scale(t_range range)
 {
 	int	width;
 	int	height;
-	int	pos_width;
-	int	pos_height;
 	int scale;
-	
-	pos_width = range.x_max - range.x_min;
-	pos_height = range.y_max - range.y_min;
 
-	width = (WIDTH - BLANK) / pos_width;
-	height = (HEIGHT - BLANK) / pos_height;
-	((width > height) && (scale = height)) || ((width <= height) && (scale = width));
+	width = (WIDTH - BLANK) / (range.x_max - range.x_min);
+	height = (HEIGHT - BLANK) / (range.y_max - range.y_min);
+	((width > height) && (scale = height)) || \
+	((width <= height) && (scale = width));
 	return (scale);
 }
 
 int	get_x_offset(t_range range, int scale, double shift_x)
 {
-	int	i;
 	int	x_offset;
 
 	range.x_max = (range.x_max + shift_x) * scale;
-	range.x_min += (range.x_min + shift_x) * scale;
-	i = (range.x_max - range.x_min) / 2;
-	x_offset = (WIDTH / 2) - i;
+	range.x_min = (range.x_min + shift_x) * scale;
+	x_offset = (WIDTH / 2) - ((range.x_max - range.x_min) / 2);
 	return (x_offset);
 }
 
 int	get_y_offset(t_range range, int scale, double shift_y)
 {
 	double	y_offset;
-	int	y;
 
 	range.y_max = (range.y_max + shift_y) * scale;
-	range.y_min += (range.y_min + shift_y) * scale;
-	y = (range.y_max - range.y_min) / 2;
-	y_offset = (HEIGHT / 2) - y;
+	range.y_min = (range.y_min + shift_y) * scale;
+	y_offset = (HEIGHT / 2) - ((range.y_max - range.y_min) / 2);
 	return (y_offset);
 }
 
@@ -82,10 +74,14 @@ void	center_coordinates(t_map *fdf, t_pos *map, int i)
 	double	shift_y;
 
 	scale = get_scale(fdf->range);
-	(((fdf->range.x_min > 0) && (shift_x = fdf->range.x_min * 1))) || \
-	(((fdf->range.x_min <= 0) && (shift_x = fdf->range.x_min * -1)));
-	(((fdf->range.y_min > 0) && (shift_y = fdf->range.y_min * 1)) || \
-	((fdf->range.y_min <= 0) && (shift_y = fdf->range.y_min * -1)));
+	if (fdf->range.x_min > 0)
+		shift_x = fdf->range.x_min;
+	else
+		shift_x = fdf->range.x_min * -1;
+	if (fdf->range.y_min > 0)
+		shift_y = fdf->range.y_min;
+	else
+		shift_y = fdf->range.y_min * -1;
 	x_offset = get_x_offset(fdf->range, scale, shift_x);
 	y_offset = get_y_offset(fdf->range, scale, shift_y);
 	while (map[i].color != -1)

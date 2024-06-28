@@ -14,7 +14,7 @@
 # endif
 
 # ifndef WIDTH
-#  define WIDTH	1500
+#  define WIDTH	1920
 # endif
 
 # ifndef HEIGHT
@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include "get_next_line/get_next_line.h"
 #include "libft/libft.h"
-#include "minilibx-linux/mlx.h"
+#include "minilibx_macos/mlx.h"
 
 typedef struct	s_data
 {
