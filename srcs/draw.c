@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 19:19:37 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:26:35 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:35 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 void	isometric(t_map *fdf, int i)
 {

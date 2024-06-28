@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:21:48 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:22:09 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:26 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 void	get_value(t_ipos start, t_ipos end, t_map *fdf)
 {

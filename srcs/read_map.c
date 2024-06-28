@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:34:25 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:44 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 int	get_map_size(char *argv, t_map *fdf)
 {

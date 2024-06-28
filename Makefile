@@ -5,14 +5,14 @@ ARFLAGS = -rcs
 RM = rm -f
 LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
-SRC = bresenham.c \
-		center.c \
-		close.c \
-		draw.c \
-		error.c \
-		fdf.c \
-		read_map.c \
-		setting.c \
+SRC = ./srcs/bresenham.c \
+		./srcs/center.c \
+		./srcs/close.c \
+		./srcs/draw.c \
+		./srcs/error.c \
+		./srcs/fdf.c \
+		./srcs/read_map.c \
+		./srcs/setting.c \
 		./get_next_line/get_next_line_utils.c \
 		./get_next_line/get_next_line.c
 OBJ = $(SRC:.c=.o)

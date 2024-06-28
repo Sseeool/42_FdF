@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:19:11 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:33:21 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:38 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 void	error_message(char *s)
 {

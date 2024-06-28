@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:20:12 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:33:05 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:41 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 int	main(int argc, char **argv)
 {

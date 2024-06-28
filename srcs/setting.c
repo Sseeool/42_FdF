@@ -6,11 +6,11 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:08:21 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:37:54 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:55:48 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 void	set_window(t_window *window, t_data *image)
 {
