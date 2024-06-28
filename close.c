@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 00:19:11 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:33:21 by eonoh            ###   ########.fr       */
+/*   Created: 2024/06/29 00:15:39 by eonoh             #+#    #+#             */
+/*   Updated: 2024/06/29 03:22:44 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	error_message(char *s)
+int	press_distory_btn(int key, t_window *window)
 {
-	write(2, s, ft_strlen(s));
-	exit(1);
+	if (!window)
+		return (0);
+	if (key)
+		exit(0);
+	return (1);
 }
 
-void	is_valid_arg(char *s)
+int	mlx_close(t_window *window)
 {
-	int	idx;
+	mlx_destroy_image(window->mlx_ptr, window->data->img);
+	mlx_destroy_window(window->mlx_ptr, window->win_ptr);
+	mlx_destroy_display(window->mlx_ptr);
+	free(window->mlx_ptr);
+	exit(0);
+}
 
-	idx = ft_strlen(s) - 4;
-	if (ft_strncmp(s + idx, ".fdf", 4) != 0)
-		error_message("Invalid argument error.\n");
+int	key_press(int key, t_window *window)
+{
+	if (key == 65307)
+		mlx_close(window);
+	return (0);
 }

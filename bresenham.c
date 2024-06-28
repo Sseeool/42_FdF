@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:21:48 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/26 23:29:03 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:22:09 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	draw_shallow(t_ipos start, t_ipos end, t_data *image, t_map *fdf)
 void	draw_steep(t_ipos start, t_ipos end, t_data *image, t_map *fdf)
 {
 	int	disc;
-;
+
 	disc = 2 * (fdf->w) - fdf->h;
 	while (start.y != end.y)
 	{
@@ -71,20 +71,4 @@ void	bresenham(t_ipos start, t_ipos end, t_data *image, t_map *fdf)
 		draw_shallow(start, end, image, fdf);
 	else
 		draw_steep(start, end, image, fdf);
-}
-
-void	draw_line(t_map *fdf, t_data *image)
-{
-	int	i;
-
-	i = 0;
-	while (i < fdf->size)
-	{
-		fdf->i = i;
-		if (i + 1 < fdf->size && (i % fdf->x_size != fdf->x_size - 1))
-			bresenham(fdf->int_map[i], fdf->int_map[i + 1], image, fdf);
-		if (i + fdf->x_size < fdf->size)
-			bresenham(fdf->int_map[i], fdf->int_map[i + fdf->x_size], image, fdf);
-		i++;
-	}
 }

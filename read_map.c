@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/26 02:08:23 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 03:34:25 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_map_size(char *argv, t_map *fdf)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 
 	fdf->y_size = 0;
@@ -27,7 +27,7 @@ int	get_map_size(char *argv, t_map *fdf)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		(fdf->y_size)++;
 		free(line);
 	}
@@ -37,7 +37,7 @@ int	get_map_size(char *argv, t_map *fdf)
 int	count_word(char *s, char c)
 {
 	int	cnt;
-	int flag;
+	int	flag;
 
 	cnt = 0;
 	flag = 1;
@@ -76,7 +76,8 @@ int	get_color(char **s)
 			result = result * 16 + (**s - 'A' + 10);
 		(*s)++;
 	}
-	invalid_color_error(**s);
+	if ((!**s && !(**s == ' ') && !(**s == '\n')))
+		error_message("Invalid color error.\n");
 	return (result);
 }
 
@@ -101,28 +102,29 @@ void	get_map_data(char *line, int y, t_map *fdf, int *i)
 		fdf->map[*i].color = get_color(&line);
 		while (*line == ' ' && *line)
 			line++;
-		set_coordinate_bounds(fdf, fdf->map, *i);
+		get_pos_range(fdf, fdf->map, *i);
 		isometric(fdf, *i);
 		(*i)++;
 	}
 }
 
-void read_map(char *argv, t_map *fdf)
+void	read_map(char *argv, t_map *fdf)
 {
-	char *line;
-	int fd;
-	int	i;
-	int	y;
+	char	*line;
+	int		fd;
+	int		i;
+	int		y;
 
 	fd = open(argv, O_RDONLY);
-	open_file_error(fd);
+	if (fd == -1)
+		error_message("Failed to open file.\n");
 	i = 0;
 	y = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		get_map_data(line, y++, fdf, &i);
 		free(line);
 	}
