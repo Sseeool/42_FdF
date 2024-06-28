@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 20:08:21 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:55:48 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 04:52:27 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_window(t_window *window, t_data *image)
 {
 	window->mlx_ptr = mlx_init();
 	window->win_ptr = \
-	mlx_new_window(window->mlx_ptr, WIDTH, HEIGHT, "My Window");
+	mlx_new_window(window->mlx_ptr, WIDTH, HEIGHT, "FdF");
 	image->img = mlx_new_image(window->mlx_ptr, WIDTH, HEIGHT);
 	image->addr = mlx_get_data_addr(image->img, &(image)->bits_per_pixel, \
 				&(image)->line_length, &(image)->endian);

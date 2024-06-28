@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:19:11 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:55:38 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 04:10:02 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ void	is_valid_arg(char *s)
 	idx = ft_strlen(s) - 4;
 	if (ft_strncmp(s + idx, ".fdf", 4) != 0)
 		error_message("Invalid argument error.\n");
+}
+
+void	is_valid_map(char *s)
+{
+	if (!(*s && ((*s >= '0' && *s <= '9') \
+		|| *s == ' ' || *s == ',' || *s == '-' || *s == '\n')))
+		error_message("Invalid map error.\n");
 }

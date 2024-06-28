@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:19:40 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:30:53 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 04:11:57 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_map
 //error.c
 void	error_message(char *s);
 void	is_valid_arg(char *s);
+void	is_valid_map(char *s);
 
 // setting.c
 void	set_window(t_window *window, t_data *image);

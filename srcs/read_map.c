@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:55:44 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 05:16:14 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	get_map_size(char *argv, t_map *fdf)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
+		if (count_word(line, ' ') != fdf->x_size)
+			error_message("Invalid map format: Not a rectangle.\n");
 		(fdf->y_size)++;
 		free(line);
 	}
@@ -81,13 +83,13 @@ int	get_color(char **s)
 	return (result);
 }
 
-// 이상한 맵 들어오면 exit 때리기. 직사각형, 숫자만 들어와야하고.
 void	get_map_data(char *line, int y, t_map *fdf, int *i)
 {
 	char	*start;
 	int		x;
 
 	x = 0;
+	is_valid_map(line);
 	while (*line != '\n' && *line != '\0')
 	{
 		start = line;
