@@ -1,7 +1,5 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iget_next_line
-AR = ar
-ARFLAGS = -rcs
 RM = rm -f
 LDFLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 

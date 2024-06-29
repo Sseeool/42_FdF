@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 20:54:22 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 23:15:35 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	get_map_data(char *line, int y, t_map *fdf, int *i)
 	int		x;
 
 	x = 0;
-	is_valid_map(line);
 	while (*line != '\n' && *line != '\0')
 	{
 		start = line;
