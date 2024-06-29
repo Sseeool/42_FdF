@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:19:40 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 08:46:45 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 23:17:29 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 // error.c
 void	error_message(char *s);
 void	is_valid_arg(char *s);
-void	is_valid_map(char *s);
 
 // read_map.c
 int		get_map_size(char *argv, t_map *fdf);
