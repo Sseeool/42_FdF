@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   make_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 19:19:37 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 04:20:35 by eonoh            ###   ########.fr       */
+/*   Created: 2024/06/29 08:43:56 by eonoh             #+#    #+#             */
+/*   Updated: 2024/06/29 08:44:40 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,18 @@ void	isometric(t_map *fdf, int i)
 	get_pos_range(fdf, fdf->i_map, i);
 }
 
-void	draw_line(t_map *fdf, t_data *image)
+void	set_mapdup(t_map *fdf)
 {
 	int	i;
-	int	x_size;
 
 	i = 0;
-	x_size = fdf->x_size;
 	while (i < fdf->size)
 	{
-		fdf->i = i;
-		if (i + 1 < fdf->size && (i % x_size != x_size - 1))
-			bresenham(fdf->int_map[i], fdf->int_map[i + 1], image, fdf);
-		if (i + x_size < fdf->size)
-			bresenham(fdf->int_map[i], fdf->int_map[i + x_size], image, fdf);
+		fdf->int_map[i].x = (int)(fdf->i_map[i].x);
+		fdf->int_map[i].y = (int)(fdf->i_map[i].y);
+		fdf->int_map[i].z = (int)(fdf->i_map[i].z);
+		fdf->int_map[i].color = (int)(fdf->i_map[i].color);
 		i++;
 	}
-}
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	fdf->int_map[i].color = -1;
 }

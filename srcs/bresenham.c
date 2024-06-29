@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bresenham.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:21:48 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 03:55:26 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 08:41:15 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,22 @@ void	bresenham(t_ipos start, t_ipos end, t_data *image, t_map *fdf)
 		draw_shallow(start, end, image, fdf);
 	else
 		draw_steep(start, end, image, fdf);
+}
+
+void	draw_line(t_map *fdf, t_data *image)
+{
+	int	i;
+	int	x_size;
+
+	i = 0;
+	x_size = fdf->x_size;
+	while (i < fdf->size)
+	{
+		fdf->i = i;
+		if (i + 1 < fdf->size && (i % x_size != x_size - 1))
+			bresenham(fdf->int_map[i], fdf->int_map[i + 1], image, fdf);
+		if (i + x_size < fdf->size)
+			bresenham(fdf->int_map[i], fdf->int_map[i + x_size], image, fdf);
+		i++;
+	}
 }

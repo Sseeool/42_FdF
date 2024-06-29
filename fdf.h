@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 03:19:40 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 04:11:57 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 08:46:45 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # ifndef COLOR_DEFAULT
 #  define COLOR_DEFAULT 0xFFFFFF
-# endif
-
-# ifndef SCALE
-#  define SCALE	1
 # endif
 
 # ifndef Z_SCALE
@@ -107,15 +103,15 @@ typedef struct s_map
 	int		i;
 }	t_map;
 
-//error.c
+// fdf.c
+void	set_window(t_window *window, t_data *image);
+void	set_map(char *argv, t_map *fdf);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+
+// error.c
 void	error_message(char *s);
 void	is_valid_arg(char *s);
 void	is_valid_map(char *s);
-
-// setting.c
-void	set_window(t_window *window, t_data *image);
-void	set_map(char *argv, t_map *fdf);
-void	set_mapdup(t_map *fdf);
 
 // read_map.c
 int		get_map_size(char *argv, t_map *fdf);
@@ -124,10 +120,9 @@ int		get_color(char **s);
 int		count_word(char *s, char c);
 void	read_map(char *argv, t_map *fdf);
 
-// draw.c
+// make_map.c
 void	isometric(t_map *fdf, int i);
-void	draw_line(t_map *fdf, t_data *image);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	set_mapdup(t_map *fdf);
 
 // center.c
 int		get_scale(t_range range);
@@ -141,6 +136,7 @@ void	get_value(t_ipos start, t_ipos end, t_map *fdf);
 void	draw_shallow(t_ipos start, t_ipos end, t_data *image, t_map *fdf);
 void	draw_steep(t_ipos start, t_ipos end, t_data *image, t_map *fdf);
 void	bresenham(t_ipos start, t_ipos end, t_data *image, t_map *fdf);
+void	draw_line(t_map *fdf, t_data *image);
 
 //close.c
 int		press_distory_btn(int key, t_window *window);
