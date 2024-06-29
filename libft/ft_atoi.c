@@ -6,11 +6,12 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 03:13:37 by eonoh             #+#    #+#             */
-/*   Updated: 2024/03/16 16:45:50 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 20:33:54 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "../fdf.h"
 
 int	ft_atoi(const char *nptr)
 {
@@ -31,6 +32,8 @@ int	ft_atoi(const char *nptr)
 		}
 		nptr++;
 	}
+	if (!(*nptr >= '0' && *nptr <= '9'))
+		error_message("Map error: Invalid number.\n");
 	while (*nptr >= '0' && *nptr <= '9')
 	{
 		num = num * 10 + (*nptr - '0');

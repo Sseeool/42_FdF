@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iget_next_line -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iget_next_line
 AR = ar
 ARFLAGS = -rcs
 RM = rm -f

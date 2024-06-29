@@ -6,7 +6,7 @@
 /*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 04:24:07 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 05:16:14 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 20:54:22 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	get_map_size(char *argv, t_map *fdf)
 
 	fdf->y_size = 0;
 	fd = open(argv, O_RDONLY);
+	if (fd == -1)
+		error_message("Failed to open file.\n");
 	line = get_next_line(fd);
 	(fdf->y_size)++;
 	fdf->x_size = count_word(line, ' ');
@@ -60,8 +62,10 @@ int	count_word(char *s, char c)
 int	get_color(char **s)
 {
 	int	result;
+	int	num;
 
 	result = 0;
+	num = 0;
 	if (**s != ',')
 		return (COLOR_DEFAULT);
 	(*s)++;
@@ -77,8 +81,9 @@ int	get_color(char **s)
 		else
 			result = result * 16 + (**s - 'A' + 10);
 		(*s)++;
+		num++;
 	}
-	if ((!**s && !(**s == ' ') && !(**s == '\n')))
+	if ((!(**s == ' ') && !(**s == '\n')) || num > 6)
 		error_message("Invalid color error.\n");
 	return (result);
 }

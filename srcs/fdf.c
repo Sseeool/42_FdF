@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eonoh <eonoh@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eonoh <eonoh@student.42gyeongsan.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 00:20:12 by eonoh             #+#    #+#             */
-/*   Updated: 2024/06/29 08:44:35 by eonoh            ###   ########.fr       */
+/*   Updated: 2024/06/29 20:13:31 by eonoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		error_message("FDF program expects 2 arguments.\n");
 	is_valid_arg(argv[1]);
-	set_window(&window, &image);
 	set_map(argv[1], &fdf);
+	set_window(&window, &image);
 	draw_line(&fdf, &image);
 	mlx_put_image_to_window(window.mlx_ptr, window.win_ptr, image.img, 0, 0);
 	mlx_key_hook(window.win_ptr, key_press, &window);
